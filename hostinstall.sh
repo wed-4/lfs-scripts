@@ -4,37 +4,36 @@
 REQUIRED_PACKAGES=(
   "binutils"
   "bison"
-  "build-essential"
+  "make"
   "bzip2"
   "coreutils"
   "diffutils"
   "findutils"
   "gawk"
   "gcc"
-  "g++"
-  "glibc-source"
+  "gcc-c++"
+  "glibc-devel"
   "grep"
   "gzip"
-  "linux-headers-$(uname -r)"
+  "kernel-headers"
   "m4"
-  "make"
   "patch"
   "perl"
   "python3"
   "sed"
   "tar"
   "texinfo"
-  "xz-utils"
+  "xz"
 )
 
 # 必要なパッケージがすでにインストールされているかチェックし、インストールされていなければインストール
 for package in "${REQUIRED_PACKAGES[@]}"; do
-  if dpkg -s $package >/dev/null 2>&1; then
-    echo "$package は既にインストールされています。"
+  if rpm -q $package >/dev/null 2>&1; then
+    echo "$package is already installed!"
   else
-    echo "$package をインストール中..."
-    sudo apt-get install -y $package
+    echo "$package is installing..."
+    sudo dnf install -y $package
   fi
 done
 
-echo "すべてのパッケージがインストールされました。"
+echo "Done"
